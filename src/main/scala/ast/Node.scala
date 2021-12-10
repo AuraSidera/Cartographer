@@ -1,0 +1,3 @@
+package ast
+
+trait Node

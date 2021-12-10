@@ -1,0 +1,68 @@
+# https://mdaines.github.io/grammophone
+
+S -> Root NamespaceList .
+S -> base CamelIdentifier NamespacePath Root NamespaceList .
+
+NamespacePath -> .
+NamespacePath -> / CamelIdentifier NamespacePath .
+
+Root -> .
+Root -> Class ClassList .
+
+NamespaceList -> .
+NamespaceList -> namespace CamelIdentifier NamespacePath ClassList NamespaceList .
+
+Class -> class          CamelIdentifier MaybeExtend MaybeImplement FieldList .
+Class -> abstract class CamelIdentifier MaybeExtend MaybeImplement FieldList .
+Class -> interface      CamelIdentifier MaybeExtend MaybeImplement FieldList .
+Class -> trait          CamelIdentifier MaybeExtend MaybeImplement FieldList .
+
+ClassList -> .
+ClassList -> Class ClassList .
+
+MaybeExtend -> .
+MaybeExtend -> : CamelIdentifier NamespacePath .
+
+MaybeImplement -> .
+MaybeImplement -> < CamelIdentifier NamespacePath ImplementList .
+
+ImplementList -> .
+ImplementList -> CamelIdentifier NamespacePath ImplementList .
+
+FieldList -> .
+FieldList -> MaybeStatic MaybeConstant Access FieldDefinition FieldList .
+
+MaybeStatic -> .
+MaybeStatic -> static .
+
+MaybeConstant -> .
+MaybeConstant -> const .
+
+Access -> + .
+Access -> \# .
+Access -> - .
+
+FieldDefinition -> SnakeIdentifier : TypeNullable MaybeGet MaybeSet .
+FieldDefinition -> CamelIdentifier : TypeList arrow TypeNullable .
+
+MaybeGet -> .
+MaybeGet -> get .
+
+MaybeSet -> .
+MaybeSet -> set .
+
+TypeNullable -> TypeSimple .
+TypeNullable -> ? TypeSimple .
+
+TypeSimple -> void .
+TypeSimple -> bool .
+TypeSimple -> int .
+TypeSimple -> double .
+TypeSimple -> string .
+TypeSimple -> array .
+TypeSimple -> callable .
+TypeSimple -> self .
+TypeSimple -> CamelIdentifier NamespacePath .
+
+TypeList -> .
+TypeList -> TypeNullable TypeList .
